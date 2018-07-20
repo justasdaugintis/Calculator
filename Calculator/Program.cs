@@ -4,57 +4,89 @@ namespace Calculator
 {
     class MainClass
     {
-        public static void Main(string[] args)
+       
+
+        public static void PrintWelcomeMessage()
         {
-            try
-            {
-                Console.WriteLine("Welcome to the calculator !");
-                Console.WriteLine("===========================");
+            Console.WriteLine("Welcome to the calculator !");
+            Console.WriteLine("===========================");
+        }
+
+        public static  void PerformOneCalculation()
+        {
+            
+
+                Console.Clear();
                 Console.WriteLine("Please enter the operator: ");
                 var operation = Console.ReadLine();
-
-                // create an array of numbers
-                Console.WriteLine("How many numbets you want to " + operation + " ?");
+                Console.WriteLine("How many numbers you want to " + operation + " ?");
                 int numberAmount = int.Parse(Console.ReadLine());
-                int[] numbers= new int[numberAmount];
-                int sum = 0;
-
-                // loop through each array item and give it value, then perform operations on those numbers.
+                int[] numbers = new int[numberAmount];
+                
 
                 for (int i = 0; i < numbers.Length; i++)
                 {
                     Console.WriteLine("please enter numer " + (i + 1) + ":");
                     numbers[i] = int.Parse(Console.ReadLine());
-                   
+
                 }
-                sum = numbers[0];
+
+               int sum = numbers[0];
 
                 for (int i = 1; i < numbers.Length; i++)
                 {
                     if (operation == "+")
+                    {
                         sum = sum + numbers[i];
+                    //return true;
+                    }
 
                     else if (operation == "-")
+                    {
                         sum = sum - numbers[i];
+                   // return true;
+                    }
 
                     else if (operation == "*")
+                    {
                         sum = sum * numbers[i];
+                   // return true;
+                    }
+
 
                     else if (operation == "/")
+                    {
                         sum = sum / numbers[i];
+                   // return true;
+                    }
                     else
+                    {
                         Console.WriteLine("Something went wrong");
+                   // return true;
+                    }
                 }
 
                 //Print out answer
                 Console.Write("The answer is: " + sum);
+                 Console.ReadLine();
+           // return true;
 
-            }
-            catch (FormatException)
+        }
+
+
+        public static void Main(string[] args)
+        {
+            bool keepGoing = true;
+            PrintWelcomeMessage();
+
+            while (keepGoing)
             {
-                Console.Write("Only number values are accepted !");
-
+           PerformOneCalculation();
             }
+          
+
+           Console.ReadLine();
+           
         }
     }
 }
