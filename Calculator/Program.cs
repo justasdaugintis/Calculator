@@ -1,5 +1,8 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace Calculator
 {
     class MainClass
@@ -12,87 +15,84 @@ namespace Calculator
             Console.WriteLine("===========================");
         }
 
-
-
-
-
-
-        public static void PerformOneCalculation()
+        // check for operator
+        public static string Operator()
         {
+            Console.WriteLine("Please enter the operator: ");
+            var operation = Console.ReadLine();
+            return operation;
+        }
 
-            bool op = true;
-            Console.Clear();
-
-            while (op)
+        // create an array
+        public static int[] NumberArray(string operation)
+        {
+            var amount = NumberCheck("How many numbers do you want to " + operation + "? ");
+            int[] numbers = new int[amount];
+  
+            for (int i = 0; i < numbers.Length; i++)
             {
-                Console.WriteLine("Please enter the operator: ");
-                var operation = Console.ReadLine();
-                if (operation == "+" || operation == "-" || operation == "/" || operation == "*")
+                numbers[i] = NumberCheck("please enter numer " + (i + 1) + ":");
+            }
+            return numbers;
+        }
+
+        //check if a number is valid
+        public static int NumberCheck(string message)
+        {
+            int answer;
+            do
+            {
+              Console.Write(message);
+            } while (!int.TryParse(Console.ReadLine(), out answer));
+
+              return answer;
+
+        }
+
+        //perform a calculation
+        public static int Calculate(string operation, int[] numbers)
+        {
+            int sum = numbers[0];
+
+            for (int i = 1; i < numbers.Length; i++)
+            {
+                if (operation == "+")
                 {
-                    op = false;
-
-                    try
-                    {
-                        Console.WriteLine("How many numbers you want to " + operation + " ?");
-                        int numberAmount = int.Parse(Console.ReadLine());
-                        int[] numbers = new int[numberAmount];
-                        for (int i = 0; i < numbers.Length; i++)
-                        {
-                                Console.WriteLine("please enter numer " + (i + 1) + ":");
-                            if(int.TryParse(Console.ReadLine(), out int answer))
-                            {
-                                numbers[i] = answer;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Not a number !. Try again. ");
-                                i = i - 1;
-                                continue;
-                            }
-
-                        }
-                        int sum = numbers[0];
-                        for (int i = 1; i < numbers.Length; i++)
-                        {
-                            if (operation == "+")
-                            {
-                                sum = sum + numbers[i];
-                                //return true;
-                            }
-
-                            else if (operation == "-")
-                            {
-                                sum = sum - numbers[i];
-                                // return true;
-                            }
-
-                            else if (operation == "*")
-                            {
-                                sum = sum * numbers[i];
-                                // return true;
-                            }
-
-                            else if (operation == "/")
-                            {
-                                sum = sum / numbers[i];
-                                // return true;
-                            }
-                           
-                        }
-                        Console.Write("The answer is: " + sum);
-                        Console.ReadLine();
-                    }
-                    catch (FormatException)
-                    {
-                        continue;
-                    }
+                    sum = sum + numbers[i];
+                    //return true;
                 }
-                else
+
+                else if (operation == "-")
                 {
-                    Console.WriteLine("You've entered a wrong operator. Try again.");
+                    sum = sum - numbers[i];
+                    // return true;
+                }
+
+                else if (operation == "*")
+                {
+                    sum = sum * numbers[i];
+                    // return true;
+                }
+
+                else if (operation == "/")
+                {
+                    sum = sum / numbers[i];
+                    // return true;
                 }
                
             }
+            return sum;
+        }
+                    
+               
+        public static void PerformOneCalculation()
+        {
+            var operation = Operator();
+            var numbers = NumberArray(operation);
+            var answer = Calculate(operation, numbers);
+
+            Console.WriteLine("The answer is: " + answer);
+            Console.ReadLine();
         }
 
 
